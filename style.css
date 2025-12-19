@@ -58,18 +58,14 @@ ul {
         background-color: transparent;
         border-bottom: 2px solid #007bff;
 }
-/* リスト全体のスタイル */
 .quiz-list {
-    list-style: none;     /* 点（・）を消す */
-    padding: 0;           /* 左側の余白を消す */
-    margin: 20px 0;       /* 前後の間隔を空ける */
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
 }
-
-/* リストの各項目（ボタンの外枠） */
 .quiz-list li {
-    margin-bottom: 12px;  /* ボタン同士がくっつかないように隙間を作る */
+    margin-bottom: 12px;
 }
-/* ナビゲーションバー */
 nav {
     background: #2c3e50;
     padding: 1rem;
@@ -86,15 +82,11 @@ nav a {
     text-decoration: none;
     font-weight: bold;
 }
-
-/* メインコンテンツ */
 main {
     max-width: 800px;
     margin: 20px auto;
     padding: 0 20px;
 }
-
-/* ボタン風リンク */
 .btn {
     display: inline-block;
     background: #3498db;
