@@ -47,7 +47,6 @@ ul {
         color: #d9534f;
 }
 .blank-container .blank {
-        font-size: 1.2rem;
         color: transparent;
         background-color: #ccc;
         border-bottom: 2px dashed #999;
@@ -55,6 +54,7 @@ ul {
         transition: color 0.3s, background-color 0.3s;
 }
 .blank-container.revealed .blank {
+        font-size: 1.2rem;
         color: #333;
         background-color: transparent;
         border-bottom: 2px solid #007bff;
