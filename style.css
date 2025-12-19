@@ -46,7 +46,7 @@ ul {
         color: #d9534f;
 }
 .blank-container .blank {
-        font-size: inherit;
+        font-size: 1.2rem;
         color: transparent;
         background-color: #ccc;
         border-bottom: 2px dashed #999;
