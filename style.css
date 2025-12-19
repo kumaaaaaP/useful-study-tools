@@ -1,9 +1,10 @@
 body {
         font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN', Meiryo, メイリオ, sans-serif;
-        line-height: 1.8;
+        line-height: 1.5;
         padding: 20px;
         background-color: #f4f4f4;
         color: #333;
+        font-size: 200%;
 }
 .container {
         max-width: 800px;
@@ -14,10 +15,10 @@ body {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 h1 {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    padding: 10px 0;
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding: 10px 0;
 }
 h2 {
         font-size: 1.4rem;
@@ -59,43 +60,43 @@ ul {
         border-bottom: 2px solid #007bff;
 }
 .quiz-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
 }
 .quiz-list li {
-    margin-bottom: 12px;
+        margin-bottom: 12px;
 }
 nav {
-    background: #2c3e50;
-    padding: 1rem;
+        background: #2c3e50;
+        padding: 1rem;
 }
 nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 15px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 15px;
 }
 nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
 }
 main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 20px;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
 }
 .btn {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    margin: 10px auto;
-    text-align: center;
-    background: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 10px auto;
+        text-align: center;
+        background: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
 }
