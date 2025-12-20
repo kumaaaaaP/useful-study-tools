@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鉄壁演習ツール 英単語演習</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>鉄壁 演習ツール</h1>
+
+    <div class="config-area">
+        <div class="input-group">
+            <input type="number" id="startNumber" placeholder="開始" min="1">
+            <span> ～ </span>
+            <input type="number" id="endNumber" placeholder="終了" min="1">
+        </div>
+        <div class="shuffle-group">
+            <label>
+                <input type="checkbox" id="shuffleCheckbox"> 出題順をシャッフルする
+            </label>
+        </div>
+        <button id="startButton" class="btn">演習開始</button>
+        <span id="messageDisplay" class="error-msg hidden"></span>
+    </div>
+
+    <div id="flashcard" class="flashcard">
+        <p id="wordDisplay" class="word-display">READY</p>
+        <div id="meaningDisplay" class="meaning-display hidden">
+            <p id="meaningText"></p>
+        </div>
+    </div>
+
+    <p id="progressDisplay" class="progress-text">0 / 0</p>
+
+    <div class="nav-controls">
+        <button id="prevButton" class="btn-inline btn-secondary">前へ</button>
+        <button id="nextButton" class="btn-inline">次へ</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
