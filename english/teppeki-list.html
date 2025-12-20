@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鉄壁単語リスト - 検索機能付き</title>
+    <title>鉄壁単語リスト - 通し番号維持版</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             line-height: 1.6;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 20px;
         }
@@ -16,55 +16,64 @@
             max-width: 900px;
             margin: auto;
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+        }
+        .search-container {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            padding: 10px 0 20px 0;
+            z-index: 100;
         }
         .search-box {
-            margin-bottom: 20px;
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 4px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             box-sizing: border-box;
             outline: none;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         .search-box:focus {
             border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0,123,255,0.2);
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
         }
         th, td {
-            padding: 12px;
+            padding: 14px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #f0f0f0;
         }
         th {
-            background-color: #007bff;
-            color: white;
-            position: sticky;
-            top: 0;
+            background-color: #f8f9fa;
+            color: #555;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
         }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+        .num-col { width: 80px; color: #888; font-family: monospace; }
+        .eng-col { width: 30%; font-weight: bold; color: #007bff; font-size: 1.1em; }
+        .jp-col { width: auto; color: #333; }
+        
+        tr:hover { background-color: #f8fbff; }
+        
         .no-result {
             text-align: center;
-            padding: 20px;
-            color: #888;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1em;
         }
-        .num-col { width: 10%; }
-        .eng-col { width: 30%; font-weight: bold; color: #007bff; }
-        .jp-col { width: 60%; }
     </style>
 </head>
 <body>
@@ -72,12 +81,14 @@
 <div class="container">
     <h1>鉄壁 単語リスト</h1>
     
-    <input type="text" id="searchInput" class="search-box" placeholder="英単語または日本語で検索...">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="英単語または日本語で検索（例: vital, 重要）...">
+    </div>
 
     <table id="wordTable">
         <thead>
             <tr>
-                <th class="num-col">#</th>
+                <th class="num-col">No.</th>
                 <th class="eng-col">英単語</th>
                 <th class="jp-col">日本語訳</th>
             </tr>
@@ -91,68 +102,77 @@
 <script src="teppeki-script.js"></script>
 
 <script>
-    // HTML要素の取得
     const tableBody = document.getElementById('tableBody');
     const searchInput = document.getElementById('searchInput');
     const noResult = document.getElementById('noResult');
 
     /**
-     * テーブルを初期表示する関数
-     * @param {Array} words 表示する単語データの配列
+     * テーブルを描画する関数
+     * @param {Array} wordsItems 表示する要素（オブジェクトに元のindexを含める）
      */
-    function renderTable(words) {
+    function renderTable(wordsItems) {
         tableBody.innerHTML = '';
-        if (words.length === 0) {
+        
+        if (wordsItems.length === 0) {
             noResult.style.display = 'block';
             return;
         }
         noResult.style.display = 'none';
 
-        words.forEach((word, index) => {
+        const fragment = document.createDocumentFragment();
+
+        wordsItems.forEach(item => {
             const row = document.createElement('tr');
             
-            // 問題番号は配列のインデックス+1（データ側に番号がある場合は word.id などに適宜変更してください）
+            // 通し番号（元の配列のインデックス + 1）
             const cellNum = document.createElement('td');
-            cellNum.textContent = index + 1;
             cellNum.className = 'num-col';
+            cellNum.textContent = item.originalIndex + 1;
 
             const cellEng = document.createElement('td');
-            cellEng.textContent = word.english;
             cellEng.className = 'eng-col';
+            cellEng.textContent = item.english;
 
             const cellJp = document.createElement('td');
-            cellJp.textContent = word.japanese;
             cellJp.className = 'jp-col';
+            cellJp.textContent = item.japanese;
 
             row.appendChild(cellNum);
             row.appendChild(cellEng);
             row.appendChild(cellJp);
-            tableBody.appendChild(row);
+            fragment.appendChild(row);
         });
+
+        tableBody.appendChild(fragment);
     }
 
-    // 初回表示
+    // 検索・フィルタリング処理
+    function handleSearch() {
+        const keyword = searchInput.value.toLowerCase().trim();
+        
+        // 元の配列 allWords に、それぞれの元のインデックスを付与してフィルタリング
+        const filtered = allWords
+            .map((word, index) => ({ ...word, originalIndex: index }))
+            .filter(word => {
+                return word.english.toLowerCase().includes(keyword) || 
+                       word.japanese.includes(keyword);
+            });
+
+        renderTable(filtered);
+    }
+
+    // 初期化
     window.addEventListener('DOMContentLoaded', () => {
         if (typeof allWords !== 'undefined') {
-            renderTable(allWords);
+            // 初回は全件表示
+            handleSearch();
         } else {
-            console.error('teppeki.js が正しく読み込まれていないか、allWords 配列が見つかりません。');
-            tableBody.innerHTML = '<tr><td colspan="3" class="no-result">データの読み込みに失敗しました。</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="3" class="no-result">teppeki.jsの読み込みに失敗しました。</td></tr>';
         }
     });
 
-    // 検索機能のイベントリスナー
-    searchInput.addEventListener('input', (e) => {
-        const keyword = e.target.value.toLowerCase();
-        
-        // フィルタリング処理
-        const filteredWords = allWords.filter(word => {
-            return word.english.toLowerCase().includes(keyword) || 
-                   word.japanese.includes(keyword);
-        });
-
-        renderTable(filteredWords);
-    });
+    // 入力イベント
+    searchInput.addEventListener('input', handleSearch);
 </script>
 
 </body>
