@@ -101,3 +101,119 @@ main {
         text-decoration: none;
         font-size: 100%;
 }
+.btn:hover {
+        background: #2980b9;
+}
+.config-area {
+    background-color: #fcfcfc;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+    border: 1px solid #eee;
+}
+.input-group {
+    margin-bottom: 15px;
+}
+.input-group input {
+    font-size: 1.2rem;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.shuffle-group {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+/* フラッシュカード */
+.flashcard {
+    background-color: #fff;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    padding: 50px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+.flashcard:hover {
+    background-color: #f9f9f9;
+}
+.word-display {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+}
+.meaning-display {
+    margin-top: 20px;
+    padding: 10px;
+    color: #d9534f;
+    border-top: 2px dashed #eee;
+    width: 80%;
+}
+
+/* プログレス表示 */
+.progress-text {
+    text-align: center;
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+/* ナビゲーションボタン */
+.nav-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.btn-inline {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    margin: 0 5px;
+    padding: 10px 25px;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    font-size: 90%;
+    font-weight: bold;
+    text-align: center;
+    min-width: 120px;
+    transition: all 0.3s;
+}
+.btn-inline:hover:not(:disabled) {
+    background: #2980b9;
+}
+.btn-inline:disabled {
+    background: #eee;
+    cursor: not-allowed;
+    color: #ccc;
+}
+.btn-secondary {
+    background: #95a5a6;
+}
+.btn-secondary:hover:not(:disabled) {
+    background: #7f8c8d;
+}
+
+/* 補助クラス */
+.hidden {
+    display: none !important;
+}
+.error-msg {
+    color: #d9534f;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 10px;
+}
