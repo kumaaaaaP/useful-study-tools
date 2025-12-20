@@ -3,76 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鉄壁単語リスト - 通し番号維持版</title>
+    <title>鉄壁単語リスト - カスタムレイアウト</title>
     <style>
+        :root {
+            --primary-color: #007bff;
+            --text-main: #333;
+            --text-sub: #666;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+
         body {
             font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            line-height: 1.6;
-            background-color: #f0f2f5;
+            background-color: var(--bg-color);
             margin: 0;
-            padding: 20px;
+            padding: 10px;
+            color: var(--text-main);
         }
+
         .container {
-            max-width: 900px;
-            margin: auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: 0 auto;
         }
+
         h1 {
             text-align: center;
-            color: #1a1a1a;
-            margin-bottom: 25px;
+            font-size: 1.5rem;
+            margin: 20px 0;
         }
+
+        /* 検索ボックス固定 */
         .search-container {
             position: sticky;
             top: 0;
-            background: #fff;
-            padding: 10px 0 20px 0;
-            z-index: 100;
+            background-color: var(--bg-color);
+            padding: 10px 0;
+            z-index: 1000;
         }
+
         .search-box {
             width: 100%;
-            padding: 15px;
+            padding: 12px 15px;
             font-size: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
             box-sizing: border-box;
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: border-color 0.3s;
         }
+
         .search-box:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0,123,255,0.2);
+            border-color: var(--primary-color);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+
+        /* リストアイテムのレイアウト */
+        .word-item {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        th, td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0f0;
+
+        /* 左側：数字 */
+        .word-number {
+            width: 50px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            border-right: 1px solid #eee;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
-        th {
-            background-color: #f8f9fa;
-            color: #555;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 14px;
+
+        /* 右側：単語ブロック */
+        .word-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* 上下に配置 */
         }
-        .num-col { width: 80px; color: #888; font-family: monospace; }
-        .eng-col { width: 30%; font-weight: bold; color: #007bff; font-size: 1.1em; }
-        .jp-col { width: auto; color: #333; }
-        
-        tr:hover { background-color: #f8fbff; }
-        
+
+        /* 右上：英単語 */
+        .word-english {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        /* 右下：日本語訳 */
+        .word-japanese {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
         .no-result {
             text-align: center;
-            padding: 40px;
+            padding: 50px;
             color: #999;
-            font-size: 1.1em;
         }
     </style>
 </head>
@@ -82,38 +115,29 @@
     <h1>鉄壁 単語リスト</h1>
     
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="英単語または日本語で検索（例: vital, 重要）...">
+        <input type="text" id="searchInput" class="search-box" placeholder="検索（英単語・日本語）...">
     </div>
 
-    <table id="wordTable">
-        <thead>
-            <tr>
-                <th class="num-col">No.</th>
-                <th class="eng-col">英単語</th>
-                <th class="jp-col">日本語訳</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            </tbody>
-    </table>
-    <div id="noResult" class="no-result" style="display: none;">該当する単語が見つかりません。</div>
+    <div id="wordList">
+        </div>
+    
+    <div id="noResult" class="no-result" style="display: none;">該当する単語がありません</div>
 </div>
 
 <script src="teppeki-script.js"></script>
 
 <script>
-    const tableBody = document.getElementById('tableBody');
+    const wordList = document.getElementById('wordList');
     const searchInput = document.getElementById('searchInput');
     const noResult = document.getElementById('noResult');
 
     /**
-     * テーブルを描画する関数
-     * @param {Array} wordsItems 表示する要素（オブジェクトに元のindexを含める）
+     * リストを描画する関数
      */
-    function renderTable(wordsItems) {
-        tableBody.innerHTML = '';
+    function renderList(items) {
+        wordList.innerHTML = '';
         
-        if (wordsItems.length === 0) {
+        if (items.length === 0) {
             noResult.style.display = 'block';
             return;
         }
@@ -121,57 +145,65 @@
 
         const fragment = document.createDocumentFragment();
 
-        wordsItems.forEach(item => {
-            const row = document.createElement('tr');
+        items.forEach(item => {
+            // 親コンテナ
+            const div = document.createElement('div');
+            div.className = 'word-item';
+
+            // 左側：数字
+            const numEl = document.createElement('div');
+            numEl.className = 'word-number';
+            numEl.textContent = String(item.originalIndex + 1).padStart(3, '0');
+
+            // 右側：コンテンツブロック
+            const contentEl = document.createElement('div');
+            contentEl.className = 'word-content';
+
+            // 右上：英単語
+            const engEl = document.createElement('div');
+            engEl.className = 'word-english';
+            engEl.textContent = item.english;
+
+            // 右下：日本語訳
+            const jpEl = document.createElement('div');
+            jpEl.className = 'word-japanese';
+            jpEl.textContent = item.japanese;
+
+            contentEl.appendChild(engEl);
+            contentEl.appendChild(jpEl);
             
-            // 通し番号（元の配列のインデックス + 1）
-            const cellNum = document.createElement('td');
-            cellNum.className = 'num-col';
-            cellNum.textContent = item.originalIndex + 1;
-
-            const cellEng = document.createElement('td');
-            cellEng.className = 'eng-col';
-            cellEng.textContent = item.english;
-
-            const cellJp = document.createElement('td');
-            cellJp.className = 'jp-col';
-            cellJp.textContent = item.japanese;
-
-            row.appendChild(cellNum);
-            row.appendChild(cellEng);
-            row.appendChild(cellJp);
-            fragment.appendChild(row);
+            div.appendChild(numEl);
+            div.appendChild(contentEl);
+            
+            fragment.appendChild(div);
         });
 
-        tableBody.appendChild(fragment);
+        wordList.appendChild(fragment);
     }
 
-    // 検索・フィルタリング処理
     function handleSearch() {
-        const keyword = searchInput.value.toLowerCase().trim();
+        const query = searchInput.value.toLowerCase().trim();
         
-        // 元の配列 allWords に、それぞれの元のインデックスを付与してフィルタリング
+        // 全体通し番号を保持するために originalIndex を付与してフィルタ
         const filtered = allWords
             .map((word, index) => ({ ...word, originalIndex: index }))
             .filter(word => {
-                return word.english.toLowerCase().includes(keyword) || 
-                       word.japanese.includes(keyword);
+                return word.english.toLowerCase().includes(query) || 
+                       word.japanese.includes(query);
             });
 
-        renderTable(filtered);
+        renderList(filtered);
     }
 
     // 初期化
     window.addEventListener('DOMContentLoaded', () => {
         if (typeof allWords !== 'undefined') {
-            // 初回は全件表示
             handleSearch();
         } else {
-            tableBody.innerHTML = '<tr><td colspan="3" class="no-result">teppeki.jsの読み込みに失敗しました。</td></tr>';
+            wordList.innerHTML = '<div class="no-result">teppeki.jsが見つかりません</div>';
         }
     });
 
-    // 入力イベント
     searchInput.addEventListener('input', handleSearch);
 </script>
 
