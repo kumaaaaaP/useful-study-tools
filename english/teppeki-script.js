@@ -2456,9 +2456,12 @@ prevButton.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    // リスト表示・検索用の要素がある場合のみ実行する（エラー防止）
     const wordList = document.getElementById('wordList');
     const searchInput = document.getElementById('searchInput');
     const noResult = document.getElementById('noResult');
+
+    if (!wordList || !searchInput) return; 
 
     function renderList(items) {
         wordList.innerHTML = '';
