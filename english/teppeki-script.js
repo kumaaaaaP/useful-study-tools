@@ -2511,4 +2511,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderList(filtered);
     }
 // 初期表示
-window.onload = () => displayWord(0);
+handleSearch();
+    searchInput.addEventListener('input', handleSearch);
+});
+
+// クイズ画面用：要素があれば初期表示
+window.addEventListener('load', () => {
+    if (document.getElementById('wordDisplay')) {
+        displayWord(0);
+    }
+});
