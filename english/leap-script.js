@@ -1344,144 +1344,377 @@ const fullQuizData = [
             ]}
 ];
 
-let quizQuestions = [];
-let currentIndex = 0;
-let score = 0;
+        let quizQuestions = [];
+        let incorrectlyAnsweredQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentQuizMode = 'en-ja';
+        let currentQuizType = 'multiple-choice';
+        let currentQuestionOrder = 'random';
 
-// 要素の取得
-const setupScreen = document.getElementById('setup-screen');
-const quizScreen = document.getElementById('quiz-screen');
-const resultScreen = document.getElementById('result-screen');
-const questionContainer = document.getElementById('currentQuestionContainer');
+        const modeSelectionScreen = document.getElementById('modeSelectionScreen');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const quizForm = document.getElementById('quizForm');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+        const currentQuestionContainer = document.getElementById('currentQuestionContainer');
+        const checkAnswerBtn = document.getElementById('checkAnswerBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const quizResults = document.getElementById('quizResults');
+        const finalScore = document.getElementById('finalScore');
+        const resultsActions = document.getElementById('resultsActions');
+        const backToTopBtn = document.getElementById('backToTopBtn');
+const testRangeToggleBtn = document.getElementById('testRangeToggleBtn');
+        const testRangeList = document.getElementById('testRangeList');
+        const startIdInput = document.getElementById('startId'); // 既に定義済みでなければここで定義
+        const endIdInput = document.getElementById('endId'); // 既に定義済みでなければここで定義
+const rangeSelectionContainer = document.getElementById('rangeSelectionContainer');
 
-// 範囲プリセットの生成
-const testRangeList = document.getElementById('testRangeList');
-for (let i = 1561; i < 1935; i += 50) {
-    const end = Math.min(i + 49, 1935);
-    const btn = document.createElement('button');
-    btn.className = 'range-preset-btn';
-    btn.textContent = `${i}-${end}`;
-    btn.onclick = () => {
-        document.getElementById('startId').value = i;
-        document.getElementById('endId').value = end;
-        testRangeList.classList.add('hidden');
-    };
-    testRangeList.appendChild(btn);
-}
-
-document.getElementById('testRangeToggleBtn').onclick = () => testRangeList.classList.toggle('hidden');
-
-// クイズ開始
-document.getElementById('startQuizBtn').onclick = () => {
-    const start = parseInt(document.getElementById('startId').value);
-    const end = parseInt(document.getElementById('endId').value);
-    const mode = document.getElementById('quizMode').value;
-    const isShuffle = document.getElementById('shuffleCheck').checked;
-
-    const filtered = fullQuizData.filter(item => item.id >= start && item.id <= end);
-    if (filtered.length === 0) {
-        document.getElementById('rangeErrorFeedback').textContent = "範囲内のデータが見つかりません。";
-        return;
-    }
-
-    quizQuestions = prepareQuestions(filtered, mode);
-    if (isShuffle) quizQuestions.sort(() => Math.random() - 0.5);
-
-    currentIndex = 0;
-    score = 0;
-    setupScreen.classList.add('hidden');
-    quizScreen.classList.remove('hidden');
-    showQuestion();
-};
-
-function prepareQuestions(data, mode) {
-    return data.map(item => {
-        const sent = item.sentences[0];
-        if (mode === 'en-ja') return { q: item.term, a: item.definition, type: 'word' };
-        if (mode === 'ja-en') return { q: item.definition, a: item.term, type: 'word' };
-        if (mode === 'first-sentence-mc') {
-            return { q: sent.en_blanked.replace('( )', '____'), hint: sent.jp, a: sent.answer, type: 'mc', options: generateOptions(sent.answer) };
+        // 小テストの範囲リストを定義
+        const testRanges = [];
+        for (let start = 1; start <= 1860; start += 60) {
+            testRanges.push({ start: start, end: start + 59 });
         }
-        return { q: sent.en_blanked.replace('( )', '____'), hint: sent.jp, a: sent.answer, type: 'input' };
-    });
-}
+        testRanges.push({ start: 1861, end: 1935 });
 
-function generateOptions(correct) {
-    let opts = [correct];
-    while(opts.length < 4) {
-        let dummy = fullQuizData[Math.floor(Math.random() * fullQuizData.length)].term;
-        if(!opts.includes(dummy)) opts.push(dummy);
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            progressText.textContent = `問題 ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function loadQuestion() {
+             if (currentQuizType === 'multiple-choice') {
+                loadMultipleChoiceQuestion();
+            } else {
+                loadFillInTheBlankQuestion();
+            }
+            updateProgressBar();
+        }
+        
+        function loadMultipleChoiceQuestion() {
+            if (currentQuestionIndex < quizQuestions.length) {
+                const qData = quizQuestions[currentQuestionIndex];
+                let optionsHtml = '';
+
+                const { options: displayOptions } = qData.optionsData;
+                displayOptions.forEach((option, index) => {
+                    optionsHtml += `<label><input type="radio" name="currentQuestion" value="${index}"> ${option}</label>`;
+                });
+
+                currentQuestionContainer.innerHTML = `
+                    <div class="quiz-section" id="q${qData.id}">
+                        <div class="question">${qData.questionDisplay}</div>
+                        <div class="options">${optionsHtml}</div>
+                        <div class="feedback" id="feedback${qData.id}"></div>
+                    </div>
+                `;
+                checkAnswerBtn.style.display = 'block';
+                nextQuestionBtn.style.display = 'none';
+            } else {
+                endQuiz();
+            }
+        }
+
+        function checkMultipleChoiceAnswer() {
+            const qData = quizQuestions[currentQuestionIndex];
+            const selectedOption = document.querySelector('input[name="currentQuestion"]:checked');
+            const feedbackElement = document.getElementById(`feedback${qData.id}`);
+            
+            if (selectedOption) {
+                const isCorrect = (parseInt(selectedOption.value) === qData.optionsData.correctIndex);
+                if (isCorrect) {
+                    score++;
+                    feedbackElement.className = 'feedback correct';
+                    feedbackElement.textContent = '正解！';
+                } else {
+                    feedbackElement.className = 'feedback incorrect';
+                    feedbackElement.textContent = `不正解... 正解は "${qData.correctAnswerFeedback}" でした。`;
+                    incorrectlyAnsweredQuestions.push(qData);
+                }
+                feedbackElement.style.display = 'block';
+                document.querySelectorAll('input[name="currentQuestion"]').forEach(radio => radio.disabled = true);
+                checkAnswerBtn.style.display = 'none';
+                nextQuestionBtn.style.display = 'block';
+            } else {
+                alert('選択肢を選んでください。');
+            }
+        }
+        
+        function loadFillInTheBlankQuestion() {
+            if (currentQuestionIndex < quizQuestions.length) {
+                const qData = quizQuestions[currentQuestionIndex];
+                const id = `${qData.wordId}-${qData.sentenceIndex}`;
+                currentQuestionContainer.innerHTML = `
+                    <div class="quiz-section" id="q${id}">
+                        <div class="blank-question-text">
+                            ${qData.wordId}-${qData.sentenceIndex + 1}. 次の文の空欄に適切な単語を入力してください。<br>
+                            ${qData.en_blanked.replace('( )', '<input type="text" id="blankInput" class="blank-input">')}
+                        </div>
+                        <div class="blank-question-translation">(${qData.jp})</div>
+                        <div class="feedback" id="feedback${id}"></div>
+                    </div>
+                `;
+                document.getElementById('blankInput')?.focus();
+                checkAnswerBtn.style.display = 'block';
+                nextQuestionBtn.style.display = 'none';
+            } else {
+                endQuiz();
+            }
+        }
+
+        function checkFillInTheBlankAnswer() {
+            const qData = quizQuestions[currentQuestionIndex];
+            const blankInput = document.getElementById('blankInput');
+            const userAnswer = blankInput ? blankInput.value.trim() : '';
+            const id = `${qData.wordId}-${qData.sentenceIndex}`;
+            const feedbackElement = document.getElementById(`feedback${id}`);
+            
+            if (userAnswer) {
+                if (userAnswer.toLowerCase() === qData.answer.toLowerCase()) {
+                    score++;
+                    feedbackElement.className = 'feedback correct';
+                    feedbackElement.textContent = `正解！ (${qData.answer})`;
+                } else {
+                    feedbackElement.className = 'feedback incorrect';
+                    feedbackElement.textContent = `不正解... 正解は "${qData.answer}" でした。`;
+                    incorrectlyAnsweredQuestions.push(qData);
+                }
+                feedbackElement.style.display = 'block';
+                if (blankInput) blankInput.disabled = true;
+                checkAnswerBtn.style.display = 'none';
+                nextQuestionBtn.style.display = 'block';
+            } else {
+                alert('解答を入力してください。');
+            }
+        }
+
+        function endQuiz() {
+            currentQuestionContainer.innerHTML = '';
+            checkAnswerBtn.style.display = 'none';
+            nextQuestionBtn.style.display = 'none';
+            progressContainer.style.display = 'none';
+
+            quizResults.style.display = 'block';
+            finalScore.innerHTML = `クイズ終了！あなたの最終スコア: ${score} / ${quizQuestions.length}`;
+            resultsActions.innerHTML = '';
+
+            if (incorrectlyAnsweredQuestions.length > 0) {
+                const retryBtn = document.createElement('button');
+                retryBtn.textContent = '間違えた問題のみもう一度解く';
+                retryBtn.className = 'retry-button';
+                retryBtn.onclick = startRetryQuiz;
+                resultsActions.appendChild(retryBtn);
+            }
+        }
+
+        function setupQuiz(questions) {
+            quizQuestions = questions;
+            currentQuestionIndex = 0;
+            score = 0;
+            incorrectlyAnsweredQuestions = [];
+
+            if (currentQuestionOrder === 'random') {
+                shuffleArray(quizQuestions);
+            } else {
+                quizQuestions.sort((a, b) => (a.wordId !== b.wordId) ? a.wordId - b.wordId : a.sentenceIndex - b.sentenceIndex);
+            }
+
+            rangeSelectionContainer.style.display = 'none';
+            modeSelectionScreen.style.display = 'none';
+            quizResults.style.display = 'none';
+            quizForm.style.display = 'block';
+            progressContainer.style.display = 'block';
+            backToTopBtn.style.display = 'block';
+
+            if (quizQuestions.length > 0) {
+                loadQuestion();
+            } else {
+                quizResults.style.display = 'block';
+                finalScore.innerHTML = '選択されたモードに一致する問題がありませんでした。';
+                progressContainer.style.display = 'none';
+            }
+        }
+
+// 変更後のコード
+function getFilteredQuizData() {
+    const startIdInput = document.getElementById('startId');
+    const endIdInput = document.getElementById('endId');
+    const errorFeedback = document.getElementById('rangeErrorFeedback'); // 【新規取得】
+
+    // 最初にエラーメッセージをクリア
+    errorFeedback.textContent = ''; 
+
+    const startId = parseInt(startIdInput?.value);
+    const endId = parseInt(endIdInput?.value);
+    
+    const minId = fullQuizData[0].id;
+    const maxId = fullQuizData[fullQuizData.length - 1].id;
+
+    // 範囲外チェック
+    if (isNaN(startId) || startId < minId || startId > maxId || 
+        isNaN(endId) || endId < minId || endId > maxId) {
+        
+        errorFeedback.textContent = `⚠️ 入力された範囲は無効です。有効な範囲は ${minId} から ${maxId} です。`; // 【alertを置き換え】
+        return []; 
     }
-    return opts.sort(() => Math.random() - 0.5);
+
+    // 順序チェック
+    if (startId > endId) {
+        errorFeedback.textContent = '⚠️ 開始番号が終了番号より大きくなっています。'; // 【alertを置き換え】
+        return []; 
+    }
+
+    // 適切な範囲でデータをフィルタリング
+    const filteredData = fullQuizData.filter(item => 
+        item.id >= startId && item.id <= endId
+    );
+
+    if (filteredData.length === 0) {
+        errorFeedback.textContent = '指定された範囲に問題がありません。'; // 【alertを置き換え】
+        return []; 
+    }
+
+    return filteredData;
 }
+        
+        function startNewQuiz() {
+            currentQuizMode = document.querySelector('input[name="quizMode"]:checked').value;
+            currentQuestionOrder = document.querySelector('input[name="questionOrder"]:checked').value;
+                const targetQuizData = getFilteredQuizData(); 
+if (targetQuizData.length === 0) { 
+return; 
+}
+                let generatedQuestions = []; 
+                const mcModes = ['en-ja', 'ja-en', 'first-sentence-mc', 'full-sentences-mc']; 
+            if (mcModes.includes(currentQuizMode)) {
+                currentQuizType = 'multiple-choice';
+                const generateOptions = (correctOpt, pool) => {
+                    const options = [correctOpt];
+                    const distractors = pool.filter(opt => opt !== correctOpt);
+                    shuffleArray(distractors);
+                    for (let i = 0; options.length < 4 && i < distractors.length; i++) {
+                        if (!options.includes(distractors[i])) options.push(distractors[i]);
+                    }
+                    while (options.length < 4) options.push("ダミー");
+                    shuffleArray(options);
+                    return { options, correctIndex: options.indexOf(correctOpt) };
+                };
 
-function showQuestion() {
-    const item = quizQuestions[currentIndex];
-    document.getElementById('progressText').textContent = `問題 ${currentIndex + 1} / ${quizQuestions.length}`;
-    document.getElementById('checkAnswerBtn').classList.remove('hidden');
-    document.getElementById('nextQuestionBtn').classList.add('hidden');
+                if (currentQuizMode === 'en-ja' || currentQuizMode === 'ja-en') {
+                    const isEnToJa = currentQuizMode === 'en-ja';
+const optionPool = targetQuizData.map(item => isEnToJa ? item.definition : item.term); generatedQuestions = targetQuizData.map(item => {
+                        const correctOpt = isEnToJa ? item.definition : item.term;
+                        return {
+                            id: item.id, wordId: item.id, sentenceIndex: 0,
+                            questionDisplay: `${item.id}. ${isEnToJa ? item.term : item.definition} の意味は？`,
+                            optionsData: generateOptions(correctOpt, optionPool),
+                            correctAnswerFeedback: correctOpt,
+                        };
+                    });
+                } else {
+const optionPool = targetQuizData.map(item => item.term); const firstOnly = currentQuizMode === 'first-sentence-mc'; targetQuizData.forEach(word => {
+                        const sentences = firstOnly ? word.sentences?.slice(0, 1) : word.sentences;
+                        sentences?.forEach((sent, idx) => {
+                            if (sent.en_blanked?.includes('( )') && sent.answer) {
+                                generatedQuestions.push({
+                                    id: `${word.id}-${idx}`, wordId: word.id, sentenceIndex: idx,
+                                    questionDisplay: `${word.id}-${idx + 1}. 次の文の空欄に適切な単語を選択してください。<br>${sent.en_blanked}<br><small>(${sent.jp})</small>`,
+                                    optionsData: generateOptions(sent.answer, optionPool),
+                                    correctAnswerFeedback: sent.answer
+                                });
+                            }
+                        });
+                    });
+                }
+            } else {
+                currentQuizType = 'fill-in-blank';
+                const firstOnly = currentQuizMode === 'first-sentence';
+targetQuizData.forEach(word => {
+                    const sentences = firstOnly ? word.sentences?.slice(0, 1) : word.sentences;
+                    sentences?.forEach((sent, idx) => {
+                        if (sent.en_blanked?.includes('( )') && sent.answer) {
+                            generatedQuestions.push({ ...sent, wordId: word.id, sentenceIndex: idx });
+                        }
+                    });
+                });
+            }
+            setupQuiz(generatedQuestions);
+        }
 
-    let html = `<div class="flashcard">`;
-    if (item.type === 'word') {
-        html += `<div class="word-display">${item.q}</div>
-                 <div class="meaning-display hidden" id="answer-box">${item.a}</div>`;
-    } else if (item.type === 'mc') {
-        html += `<div style="font-size:1rem; color:#7f8c8d; margin-bottom:10px;">${item.hint}</div>
-                 <div class="word-display" style="font-size:1.6rem;">${item.q}</div>
-                 <div class="options-container">`;
-        item.options.forEach(opt => {
-            html += `<button class="option-btn" onclick="checkAnswerMC('${opt}', '${item.a}', this)">${opt}</button>`;
+        function startRetryQuiz() {
+            setupQuiz([...incorrectlyAnsweredQuestions]);
+        }
+
+        startQuizBtn.addEventListener('click', startNewQuiz);
+
+        checkAnswerBtn.addEventListener('click', () => {
+             if (currentQuizType === 'multiple-choice') checkMultipleChoiceAnswer();
+             else checkFillInTheBlankAnswer();
         });
-        html += `</div><div class="meaning-display hidden" id="answer-box">正解: ${item.a}</div>`;
-    } else {
-        html += `<div style="font-size:1rem; color:#7f8c8d; margin-bottom:10px;">${item.hint}</div>
-                 <div class="word-display" style="font-size:1.6rem;">${item.q}</div>
-                 <input type="text" id="userInput" class="answer-input" placeholder="解答を入力" autocomplete="off">
-                 <div class="meaning-display hidden" id="answer-box">正解: ${item.a}</div>`;
-    }
-    html += `</div>`;
-    questionContainer.innerHTML = html;
-}
 
-window.checkAnswerMC = (selected, correct, btn) => {
-    const btns = document.querySelectorAll('.option-btn');
-    btns.forEach(b => b.disabled = true);
-    if (selected === correct) {
-        btn.classList.add('correct-choice');
-        score++;
-    } else {
-        btn.classList.add('incorrect-choice');
-        btns.forEach(b => { if(b.textContent === correct) b.classList.add('correct-choice'); });
-    }
-    document.getElementById('answer-box').classList.remove('hidden');
-    document.getElementById('checkAnswerBtn').classList.add('hidden');
-    document.getElementById('nextQuestionBtn').classList.remove('hidden');
-};
+        nextQuestionBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                endQuiz();
+            }
+        });
 
-document.getElementById('checkAnswerBtn').onclick = () => {
-    const item = quizQuestions[currentIndex];
-    if (item.type === 'input') {
-        const input = document.getElementById('userInput').value.trim().toLowerCase();
-        if (input === item.a.toLowerCase()) score++;
-    }
-    document.getElementById('answer-box').classList.remove('hidden');
-    document.getElementById('checkAnswerBtn').classList.add('hidden');
-    document.getElementById('nextQuestionBtn').classList.remove('hidden');
-};
+        backToTopBtn.addEventListener('click', () => {
+            quizForm.style.display = 'none';
+            quizResults.style.display = 'none';
+            currentQuestionContainer.innerHTML = '';
+            modeSelectionScreen.style.display = 'block';
+            rangeSelectionContainer.style.display = 'block';
+            backToTopBtn.style.display = 'none';
+            incorrectlyAnsweredQuestions = []; // Reset for retry mode
+        });
+function renderTestRanges() {
+            testRangeList.innerHTML = '<p style="margin: 0 0 5px 0; font-weight: bold;">範囲を選択:</p>';
+            
+            testRanges.forEach(range => {
+                const rangeText = `${range.start}〜${range.end}`;
+                const rangeBtn = document.createElement('button');
+                rangeBtn.textContent = rangeText;
+                rangeBtn.className = 'test-range-button';
+                rangeBtn.style.cssText = 'padding: 5px 10px; margin: 3px; background-color: #fff; border: 1px solid #007bff; color: #007bff; border-radius: 4px; cursor: pointer;';
+                
+                rangeBtn.addEventListener('click', () => {
+                    // 選択した範囲を入力フィールドにセット
+                    startIdInput.value = range.start;
+                    endIdInput.value = range.end;
+                    
+                    // リストを閉じる
+                    testRangeList.style.display = 'none';
+                    // エラーメッセージをクリア（念のため）
+                    document.getElementById('rangeErrorFeedback').textContent = '';
+                });
+                
+                testRangeList.appendChild(rangeBtn);
+            });
+        }
 
-document.getElementById('nextQuestionBtn').onclick = () => {
-    currentIndex++;
-    if (currentIndex < quizQuestions.length) {
-        showQuestion();
-    } else {
-        showResults();
-    }
-};
+        // 小テスト練習ボタンのクリックイベント
+        testRangeToggleBtn.addEventListener('click', () => {
+            // リストがまだ生成されていなければ生成する (初回のみ)
+            if (testRangeList.children.length <= 1) {
+                renderTestRanges();
+            }
 
-function showResults() {
-    quizScreen.classList.add('hidden');
-    resultScreen.classList.remove('hidden');
-    document.getElementById('finalScore').textContent = `${score} / ${quizQuestions.length} 正解`;
-}
-
-document.getElementById('backToTopBtn').onclick = () => location.reload();
+            // リストの表示/非表示を切り替える
+            if (testRangeList.style.display === 'none') {
+                testRangeList.style.display = 'block';
+            } else {
+                testRangeList.style.display = 'none';
+            }
+        });
