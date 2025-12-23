@@ -2181,7 +2181,6 @@ const allWords = [
 let currentRangeWords = [];
 let currentIndex = 0;
 
-// DOM要素の取得
 const startNumberInput = document.getElementById('startNumber');
 const endNumberInput = document.getElementById('endNumber');
 const shuffleCheckbox = document.getElementById('shuffleCheckbox');
@@ -2195,9 +2194,6 @@ const nextButton = document.getElementById('nextButton');
 const progressDisplay = document.getElementById('progressDisplay');
 const messageDisplay = document.getElementById('messageDisplay');
 
-/**
- * 配列をランダムにシャッフルする（フィッシャー・イェーツの手法）
- */
 function shuffleArray(array) {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -2207,17 +2203,11 @@ function shuffleArray(array) {
     return shuffled;
 }
 
-/**
- * エラーメッセージを表示する
- */
 function showMessage(message) {
     messageDisplay.textContent = message;
     messageDisplay.classList.toggle('hidden', !message);
 }
 
-/**
- * 現在の単語を画面に表示する
- */
 function displayWord(index) {
     if (currentRangeWords.length === 0) {
         wordDisplay.textContent = "READY";
@@ -2231,23 +2221,19 @@ function displayWord(index) {
     const currentWord = currentRangeWords[index];
     wordDisplay.textContent = currentWord.english;
     meaningText.textContent = currentWord.japanese;
-    meaningDisplay.classList.add('hidden'); // 新しい単語の時は意味を隠す
+    meaningDisplay.classList.add('hidden'); 
     
-    // ボタンの有効/無効制御
     prevButton.disabled = (currentIndex === 0);
     nextButton.disabled = (currentIndex === currentRangeWords.length - 1);
     
-    // 進捗表示
     progressDisplay.textContent = `${currentIndex + 1} / ${currentRangeWords.length}`;
 }
 
-// 演習開始ボタンのクリックイベント
 startButton.addEventListener('click', () => {
     showMessage('');
     const startNum = parseInt(startNumberInput.value);
     const endNum = parseInt(endNumberInput.value);
 
-    // 入力バリデーション
     if (isNaN(startNum) || isNaN(endNum) || startNum < 1 || endNum < 1) {
         showMessage("開始番号と終了番号を入力してください。");
         return;
@@ -2261,24 +2247,20 @@ startButton.addEventListener('click', () => {
         return;
     }
 
-    // 指定範囲の単語を抽出
     let tempWords = allWords.slice(startNum - 1, endNum);
     
-    // シャッフル設定の適用
     currentRangeWords = shuffleCheckbox.checked ? shuffleArray(tempWords) : tempWords;
     
     currentIndex = 0;
     displayWord(currentIndex);
 });
 
-// カードをクリックした時に意味を表示/非表示
 flashcard.addEventListener('click', () => {
     if (currentRangeWords.length > 0) {
         meaningDisplay.classList.toggle('hidden');
     }
 });
 
-// 「次へ」ボタン
 nextButton.addEventListener('click', () => {
     if (currentIndex < currentRangeWords.length - 1) {
         currentIndex++;
@@ -2286,7 +2268,6 @@ nextButton.addEventListener('click', () => {
     }
 });
 
-// 「前へ」ボタン
 prevButton.addEventListener('click', () => {
     if (currentIndex > 0) {
         currentIndex--;
