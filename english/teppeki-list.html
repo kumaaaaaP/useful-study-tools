@@ -12,7 +12,6 @@
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
         }
-
         body {
             font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: var(--bg-color);
@@ -20,7 +19,6 @@
             padding: 10px;
             color: var(--text-main);
         }
-
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -38,7 +36,6 @@
             padding: 10px 0;
             z-index: 1000;
         }
-
         .search-box {
             width: 100%;
             padding: 12px 15px;
@@ -50,12 +47,9 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: border-color 0.3s;
         }
-
         .search-box:focus {
             border-color: var(--primary-color);
         }
-
-        /* リストアイテムのレイアウト */
         .word-item {
             display: flex;
             align-items: center;
@@ -65,8 +59,6 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-
-        /* 左側：数字 */
         .word-number {
             width: 50px;
             font-family: 'Courier New', Courier, monospace;
@@ -77,29 +69,22 @@
             margin-right: 15px;
             flex-shrink: 0;
         }
-
-        /* 右側：単語ブロック */
         .word-content {
             flex-grow: 1;
             display: flex;
-            flex-direction: column; /* 上下に配置 */
+            flex-direction: column;
         }
-
-        /* 右上：英単語 */
         .word-english {
             font-size: 1.2rem;
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 4px;
         }
-
-        /* 右下：日本語訳 */
         .word-japanese {
             font-size: 0.95rem;
             color: var(--text-main);
             line-height: 1.4;
         }
-
         .no-result {
             text-align: center;
             padding: 50px;
@@ -136,9 +121,6 @@
     const searchInput = document.getElementById('searchInput');
     const noResult = document.getElementById('noResult');
 
-    /**
-     * リストを描画する関数
-     */
     function renderList(items) {
         wordList.innerHTML = '';
         
