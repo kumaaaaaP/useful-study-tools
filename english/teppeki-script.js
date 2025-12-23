@@ -87,111 +87,58 @@ const allWords = [
             { english: "complex", japanese: "複雑な, 複合の" },
             { english: "complicated", japanese: "複雑な" },
             { english: "reveal", japanese: "～を明らかにする, 暴露する" },
-            // 問題番号88
             { english: "conceal", japanese: "～を隠す" },
-            // 問題番号89
             { english: "expose", japanese: "～をさらす" },
-            // 問題番号90
             { english: "impose", japanese: "～を(…に)課す, 押しつける(on[upon]…)" },
-            // 問題番号91
             { english: "divide", japanese: "～を分割する" },
-            // 問題番号92
             { english: "diffuse", japanese: "～をまき散らす, 分散する； 拡散する" },
-            // 問題番号93
             { english: "scatter", japanese: "～をまき散らす" },
-            // 問題番号94
             { english: "spread", japanese: "広がる, 普及する" },
-            // 問題番号95
             { english: "bend", japanese: "～を曲げる" },
-            // 問題番号96
             { english: "incline", japanese: "～を傾ける, (…したい)気持ちにさせる(to do)" },
-            // 問題番号97
             { english: "lean", japanese: "(～に)寄りかかる, もたれる(on[against]～)" },
-            // 問題番号98
             { english: "erect", japanese: "～を直立させる, 建てる； 直立した" },
-            // 問題番号99
             { english: "emit", japanese: "～を放出する, 排出する" },
-            // 問題番号100
             { english: "absorb", japanese: "～を吸収する" },
-            // 問題番号101
             { english: "attract", japanese: "～を惹(引)き付ける, 魅了する" },
-            // 問題番号102
             { english: "extract", japanese: "～を抜き出す, 抽出する" },
-            // 問題番号103
             { english: "aim", japanese: "目標, 目的； (～を)狙う, 目標とする(at～)" },
-            // 問題番号104
             { english: "penetrate", japanese: "～を貫通する, ～に浸透する； 貫通する（through～）" },
-            // 問題番号105
             { english: "thrust", japanese: "～を(ぐいっと)押し付ける, 突っ込む, 突き刺す" },
-            // 問題番号106
             { english: "insert", japanese: "～を挿入する" },
-            // 問題番号107
             { english: "grasp", japanese: "～を掴む, 握る； 理解する" },
-            // 問題番号108
             { english: "grab", japanese: "～を掴む" },
-            // 問題番号109
             { english: "seize", japanese: "～を掴む, (感情などが)を襲う； 押収する" },
-            // 問題番号110
             { english: "drag", japanese: "～を引きずる" },
-            // 問題番号111
             { english: "cling", japanese: "（～に)しがみつく, 固執する(to～)" },
-            // 問題番号112
             { english: "stick", japanese: "棒； (～に)くっつく, 固執する(to～)" },
-            // 問題番号113
             { english: "attach", japanese: "～をくっつける； 愛着を持たせる" },
-            // 問題番号114
             { english: "imitate", japanese: "～を真似る" },
-            // 問題番号115
             { english: "fold", japanese: "～を折り畳む" },
-            // 問題番号116
             { english: "tear", japanese: "～を引き裂く" },
-            // 問題番号117
             { english: "mold", japanese: "～をかたどる, 形成する" },
-            // 問題番号118
             { english: "distort", japanese: "～を歪める" },
-            // 問題番号119
             { english: "expand", japanese: "～を拡大する； 拡大する； 膨張する" },
-            // 問題番号120
             { english: "shrink", japanese: "縮む" },
-            // 問題番号121
             { english: "swell", japanese: "膨らむ" },
-            // 問題番号122
             { english: "assemble", japanese: "～を集める, 組み立てる" },
-            // 問題番号123
             { english: "collect", japanese: "～を集める； 徴収する" },
-            // 問題番号124
             { english: "cram", japanese: "～を詰め込む" },
-            // 問題番号125
             { english: "rotate", japanese: "～を回転する； 回転する" },
-            // 問題番号126
             { english: "twist", japanese: "～をひねる" },
-            // 問題番号127
             { english: "upset", japanese: "～をひっくり返す, 動揺させる, 怒らせる； 動揺した, 怒った" },
-            // 問題番号128
             { english: "stir", japanese: "～をかき回す； 騒乱" },
-            // 問題番号129
             { english: "explode", japanese: "爆発する" },
-            // 問題番号130
             { english: "burst", japanese: "爆発する" },
-            // 問題番号131
             { english: "melt", japanese: "溶ける； ～を溶かす" },
-            // 問題番号132
             { english: "leak", japanese: "漏れる； ～を漏らす" },
-            // 問題番号133
             { english: "string", japanese: "ひも, 糸" },
-            // 問題番号134
             { english: "restrict", japanese: "～を(…に)制限する(to…)" },
-            // 問題番号135
             { english: "strict", japanese: "厳しい； 厳密な" },
-            // 問題番号136
             { english: "distress", japanese: "苦悩, 貧困" },
-            // 問題番号137
             { english: "strain", japanese: "緊張, 重圧, 品種, 血統" },
-            // 問題番号138
             { english: "restrain", japanese: "～を抑制する" },
-            // 問題番号139
             { english: "tense", japanese: "緊張した, ぴんと張った" },
-            // 問題番号140
             { english: "extend", japanese: "～を伸ばす, 延長する" },
             { english: "intense", japanese: "激しい" },
             { english: "force", japanese: "力, 勢力； 軍事力； ～に(…することを)強制する(to do)" },
