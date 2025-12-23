@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEAP演習 1561-1935</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>LEAP演習 1561〜1935</h1>
+
+    <div id="setup-screen">
+        <div class="config-area">
+            <h3>出題範囲の設定</h3>
+            <div class="input-group">
+                No. <input type="number" id="startId" value="1561" min="1561" max="1935">
+                〜 <input type="number" id="endId" value="1935" min="1561" max="1935">
+            </div>
+            
+            <button class="btn-inline" id="testRangeToggleBtn">範囲プリセット</button>
+            <div id="testRangeList" class="hidden" style="margin-top:15px; border:1px dashed #ccc; padding:10px;"></div>
+
+            <h3 style="margin-top:30px;">クイズ形式</h3>
+            <div class="shuffle-group">
+                <select id="quizMode" style="font-size: 1.2rem; padding: 5px;">
+                    <option value="en-ja">単語 (英 → 日)</option>
+                    <option value="ja-en">単語 (日 → 英)</option>
+                    <option value="first-sentence-mc">例文穴埋め (4択)</option>
+                    <option value="first-sentence">例文穴埋め (記述)</option>
+                </select>
+            </div>
+
+            <div class="shuffle-group">
+                <label style="cursor:pointer;"><input type="checkbox" id="shuffleCheck" checked> 問題をシャッフルする</label>
+            </div>
+
+            <button class="btn" id="startQuizBtn">クイズを開始する</button>
+            <span id="rangeErrorFeedback" class="error-msg"></span>
+        </div>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <div class="progress-text" id="progressText"></div>
+        
+        <div id="currentQuestionContainer">
+            </div>
+
+        <div class="nav-controls">
+            <button class="btn-inline btn-secondary" id="backToTopBtn">終了</button>
+            <button class="btn-inline" id="checkAnswerBtn">解答を確認</button>
+            <button class="btn-inline hidden" id="nextQuestionBtn">次へ</button>
+        </div>
+    </div>
+
+    <div id="result-screen" class="hidden" style="text-align: center;">
+        <h2>結果発表</h2>
+        <div id="finalScore" style="font-size: 2.5rem; margin: 40px 0; color: #d9534f; font-weight:bold;"></div>
+        <button class="btn" onclick="location.reload()">トップに戻る</button>
+    </div>
+</div>
+
+<script src="leap-script.js"></script>
+</body>
+</html>
