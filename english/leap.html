@@ -2,64 +2,77 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>LEAP演習 1561-1935</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEAP 1801-1860 クイズ (単語 & 例文)</title>
     <link rel="stylesheet" href="leap-style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>LEAP演習　1561〜1935</h1>
 
-<div class="container">
-    <h1>LEAP演習 1561〜1935</h1>
+<div class="range-selection" id="rangeSelectionContainer" style="text-align: center; margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background-color: #e9e9e9;">
+                <p>出題範囲を指定してください: 
+                    <button type="button" id="testRangeToggleBtn" style="padding: 5px 10px; margin-left: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">小テスト練習</button>
+                    </p>
+                開始: <input type="number" id="startId" value="1561" min="1561" max="1935" style="width: 80px; padding: 5px; margin-right: 10px;">
+                終了: <input type="number" id="endId" value="1935" min="1561" max="1935" style="width: 80px; padding: 5px;">
+                <p><small>(対応範囲: 1561 - 1935)</small></p>
 
-    <div id="setup-screen">
-        <div class="config-area">
-            <h3>出題範囲の設定</h3>
-            <div class="input-group">
-                No. <input type="number" id="startId" value="1561" min="1561" max="1935">
-                〜 <input type="number" id="endId" value="1935" min="1561" max="1935">
-            </div>
-            
-            <button class="btn-inline" id="testRangeToggleBtn">範囲プリセット</button>
-            <div id="testRangeList" class="hidden" style="margin-top:15px; border:1px dashed #ccc; padding:10px;"></div>
-
-            <h3 style="margin-top:30px;">クイズ形式</h3>
-            <div class="shuffle-group">
-                <select id="quizMode" style="font-size: 1.2rem; padding: 5px;">
-                    <option value="en-ja">単語 (英 → 日)</option>
-                    <option value="ja-en">単語 (日 → 英)</option>
-                    <option value="first-sentence-mc">例文穴埋め (4択)</option>
-                    <option value="first-sentence">例文穴埋め (記述)</option>
-                </select>
+                <div id="testRangeList" style="margin-top: 15px; padding: 10px; border: 1px dashed #ccc; border-radius: 4px; background-color: #f0f0f0; text-align: left; display: none;">
+                    <p style="margin: 0 0 5px 0; font-weight: bold;">範囲を選択:</p>
+                    </div>
+                <p id="rangeErrorFeedback" style="color: red; font-weight: bold; margin-top: 10px;"></p>
             </div>
 
-            <div class="shuffle-group">
-                <label style="cursor:pointer;"><input type="checkbox" id="shuffleCheck" checked> 問題をシャッフルする</label>
+        <div id="modeSelectionScreen">
+            <div class="mode-selection">
+                <p>クイズのモードを選択してください:</p>
+                <label><input type="radio" name="quizMode" value="en-ja" checked> 単語 (英語 → 日本語)</label>
+                <label><input type="radio" name="quizMode" value="ja-en"> 単語 (日本語 → 英語)</label>
+                <br>
+                <label><input type="radio" name="quizMode" value="first-sentence"> 例文穴埋め (第一義)</label>
+                <label><input type="radio" name="quizMode" value="full-sentences"> 例文穴埋め (全例文)</label>
+                <br>
+                <label><input type="radio" name="quizMode" value="first-sentence-mc"> 例文穴埋め(4択) (第一義)</label>
+                <label><input type="radio" name="quizMode" value="full-sentences-mc"> 例文穴埋め(4択) (全例文)</label>
             </div>
 
-            <button class="btn" id="startQuizBtn">クイズを開始する</button>
-            <span id="rangeErrorFeedback" class="error-msg"></span>
+<div class="order-selection">
+                <p>出題順序を選択してください:</p>
+                <label><input type="radio" name="questionOrder" value="random" checked> ランダム</label>
+                <label><input type="radio" name="questionOrder" value="sequential"> 番号順</label>
+            </div>
+
+            <button type="button" class="start-button" id="startQuizBtn">クイズを開始</button>
+        </div>
+
+        <form id="quizForm" style="display: none;">
+            <div id="progressContainer" style="display: none;">
+                <p id="progressText"></p>
+                <div class="progress-bar-background">
+                    <div id="progressBar" class="progress-bar-foreground"></div>
+                </div>
+            </div>
+
+            <div id="currentQuestionContainer"></div>
+
+            <div class="action-buttons">
+                <button type="button" class="check-btn" id="checkAnswerBtn">解答を確認</button>
+                <button type="button" class="next-btn" id="nextQuestionBtn">次の問題</button>
+            </div>
+        </form>
+
+        <div class="results" id="quizResults">
+             <p id="finalScore"></p>
+             <div id="resultsActions"></div>
         </div>
     </div>
 
-    <div id="quiz-screen" class="hidden">
-        <div class="progress-text" id="progressText"></div>
-        
-        <div id="currentQuestionContainer">
-            </div>
+    <button type="button" class="back-to-top-button" id="backToTopBtn">トップ画面に戻る</button>
 
-        <div class="nav-controls">
-            <button class="btn-inline btn-secondary" id="backToTopBtn">終了</button>
-            <button class="btn-inline" id="checkAnswerBtn">解答を確認</button>
-            <button class="btn-inline hidden" id="nextQuestionBtn">次へ</button>
-        </div>
-    </div>
-
-    <div id="result-screen" class="hidden" style="text-align: center;">
-        <h2>結果発表</h2>
-        <div id="finalScore" style="font-size: 2.5rem; margin: 40px 0; color: #d9534f; font-weight:bold;"></div>
-        <button class="btn" onclick="location.reload()">トップに戻る</button>
-    </div>
-</div>
+    <script>
 
 <script src="leap-script.js"></script>
+
 </body>
 </html>
