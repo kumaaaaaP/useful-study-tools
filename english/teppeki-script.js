@@ -1,29 +1,16 @@
-// 単語データ
 const allWords = [
 
-            // 問題番号1
             { english: "vital", japanese: "(～にとって)非常に重要な(to, for～)； 生命の" },
-            // 問題番号2
             { english: "vivid", japanese: "生き生きとした, 鮮やかな" },
-            // 問題番号3
             { english: "revive", japanese: "～を生き返らせる, 生き返る" },
-            // 問題番号4
             { english: "essential", japanese: "(～にとって)重要な, 必要不可欠な(to, for～)； 本質的な" },
-            // 問題番号5
             { english: "indispensable", japanese: "(～にとって)重要な, 必要不可欠な(to, for～)" },
-            // 問題番号6
             { english: "crucial", japanese: "決定的な, 極めて重要な" },
-            // 問題番号7
             { english: "significance", japanese: "重要性" },
-            // 問題番号8
             { english: "consequence", japanese: "結果, 重要さ" },
-            // 問題番号9
             { english: "matter", japanese: "事柄, 問題； 重要である" },
-            // 問題番号10
             { english: "count", japanese: "～を数える； 重要である" },
-            // 問題番号11
             { english: "make a difference", japanese: "重要である" },
-            // 問題番号12
             { english: "trivial", japanese: "ささいな, ありふれた" },
             // 問題番号13
             { english: "trifle", japanese: "ささいな事, くだらない事" },
