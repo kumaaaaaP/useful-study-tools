@@ -222,47 +222,26 @@ const allWords = [
             { english: "tense", japanese: "緊張した, ぴんと張った" },
             // 問題番号140
             { english: "extend", japanese: "～を伸ばす, 延長する" },
-            // 問題番号141
             { english: "intense", japanese: "激しい" },
-            // 問題番号142
             { english: "force", japanese: "力, 勢力； 軍事力； ～に(…することを)強制する(to do)" },
-            // 問題番号143
             { english: "compel", japanese: "～に(…することを)強いる(to do)" },
-            // 問題番号144
             { english: "oblige", japanese: "～に(…することを)義務づける, 余儀なくさせる(to do)" },
-            // 問題番号145
             { english: "voluntary", japanese: "自発的な" },
-            // 問題番号146
             { english: "spontaneous", japanese: "自発的な, 自然発生的な" },
-            // 問題番号147
             { english: "free", japanese: "自由な； 無料の； 暇な" },
-            // 問題番号148
             { english: "liberty", japanese: "自由" },
-            // 問題番号149
             { english: "release", japanese: "～を解放する" },
-            // 問題番号150
             { english: "capture", japanese: "～を捕らえる" },
-            // 問題番号151
             { english: "prohibit", japanese: "～を禁じる； ～に(…するのを)禁じる(from doing)" },
-            // 問題番号152
             { english: "forbid", japanese: "～を禁じる" },
-            // 問題番号153
             { english: "ban", japanese: "～を(公的に)禁止する" },
-            // 問題番号154
             { english: "permit", japanese: "～を許す, ～に(…するのを)許可する(to do)" },
-            // 問題番号155
             { english: "allow", japanese: "～が(…するのを)許す(to do)" },
-            // 問題番号156
             { english: "forgive", japanese: "～(過ちを犯した人)を許す" },
-            // 問題番号157
             { english: "overlook", japanese: "～を大目に見る, 許す, ～を見落とす" },
-            // 問題番号158
             { english: "generous", japanese: "寛容な, 気前のよい" },
-            // 問題番号159
             { english: "tolerate", japanese: "～を許容する, 容認する" },
-            // 問題番号160
             { english: "prevent", japanese: "～を防ぐ； ～が(…するのを)妨げる(from doing)" },
-            // 問題番号161
             { english: "avoid", japanese: "～(望ましくないもの)を避ける, (するの)を回避する(doing)" },
             { english: "hinder", japanese: "～を妨げる； ～が(…するのを)妨げる(from doing)" },
             { english: "refrain", japanese: "(～するのを)差し控える, 遠慮する(from doing)" },
