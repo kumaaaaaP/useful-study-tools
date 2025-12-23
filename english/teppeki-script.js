@@ -57,64 +57,35 @@ const allWords = [
             { english: "stable", japanese: "安定した" },
             { english: "establish", japanese: "～を設立する, 確立する" },
             { english: "subject", japanese: "科目, 主題, 家来, 臣民； 患者, 被験者； (～に)従属している, かかりやすい(to～)" },
-            // 問題番号58
             { english: "subdue", japanese: "～を征服する, 支配する, 抑える" },
-            // 問題番号59
             { english: "submit", japanese: "（～に)服従する, 身を任せる(to～)； ～を服従させる, を提出する" },
-            // 問題番号60
             { english: "submission", japanese: "服従, 提出" },
-            // 問題番号61
             { english: "fundamental", japanese: "根本的な, 基礎的な, 重要な" },
-            // 問題番号62
             { english: "fund", japanese: "資金, 基金" },
-            // 問題番号63
             { english: "found", japanese: "～を設立する" },
-            // 問題番号64
             { english: "foundation", japanese: "基盤, 基礎, 土台" },
-            // 問題番号65
             { english: "profound", japanese: "深い, 深遠な" },
-            // 問題番号66
             { english: "base", japanese: "土台、基礎" },
-            // 問題番号67
             { english: "basis", japanese: "基礎" },
-            // 問題番号68
             { english: "ground", japanese: "運動場, 地面, 根拠, 理由" },
-            // 問題番号69
             { english: "superficial", japanese: "うわべの" },
-            // 問題番号70
             { english: "shallow", japanese: "浅い； 浅はかな, うわべの" },
-            // 問題番号71
             { english: "superb", japanese: "すばらしい, 見事な" },
-            // 問題番号72
             { english: "supervise", japanese: "～を監視する, 指揮する" },
-            // 問題番号73
             { english: "superstition", japanese: "迷信" },
-            // 問題番号74
             { english: "core", japanese: "中心, 核心； (果物の)芯" },
-            // 問題番号75
             { english: "surface", japanese: "表面, 表層" },
-            // 問題番号76
             { english: "internal", japanese: "内面の, 内側の" },
             { english: "external", japanese: "外側の" },
-            // 問題番号78
             { english: "concentrate", japanese: "(～に)集中する(on～)； ～を(…に)集中させる(on…)" },
-            // 問題番号79
             { english: "focus", japanese: "(～に)集中する, 重点を置く(on～)； 焦点" },
-            // 問題番号80
             { english: "compose", japanese: "～を構成する； 作曲・作文する" },
-            // 問題番号81
             { english: "consist", japanese: "(～から)成る(of～), (～の中に)ある, 存在する(in～)" },
-            // 問題番号82
             { english: "organize", japanese: "～を組織する" },
-            // 問題番号83
             { english: "element", japanese: "要素, 元素" },
-            // 問題番号84
             { english: "component", japanese: "構成要素, 部分" },
-            // 問題番号85
             { english: "complex", japanese: "複雑な, 複合の" },
-            // 問題番号86
             { english: "complicated", japanese: "複雑な" },
-            // 問題番号87
             { english: "reveal", japanese: "～を明らかにする, 暴露する" },
             // 問題番号88
             { english: "conceal", japanese: "～を隠す" },
