@@ -12,95 +12,50 @@ const allWords = [
             { english: "count", japanese: "～を数える； 重要である" },
             { english: "make a difference", japanese: "重要である" },
             { english: "trivial", japanese: "ささいな, ありふれた" },
-            // 問題番号13
             { english: "trifle", japanese: "ささいな事, くだらない事" },
-            // 問題番号14
             { english: "common", japanese: "共通の, よくある, 一般的な, ありふれた" },
-            // 問題番号15
             { english: "ordinary", japanese: "普通の, 通常の, ありふれた" },
-            // 問題番号16
             { english: "familiar", japanese: "(～に)よく知られた(to～)； (～に)精通している(with～)； 親しい" },
-            // 問題番号17
             { english: "emphasize", japanese: "～を強調する" },
-            // 問題番号18
             { english: "stress", japanese: "～を強調する； ストレス, 重点, 強調" },
-            // 問題番号19
             { english: "neglect", japanese: "～を(うっかり)怠る, ～を無視する" },
-            // 問題番号20
             { english: "ignore", japanese: "～を無視する, ～を知らないふりをする" },
-            // 問題番号21
             { english: "eminent", japanese: "著名な" },
-            // 問題番号22
             { english: "prominent", japanese: "目立った； 有名な" },
-            // 問題番号23
             { english: "primary", japanese: "第1の, 主要な" },
-            // 問題番号24
             { english: "tiny", japanese: "ちっぽけな" },
-            // 問題番号25
             { english: "slight", japanese: "わずかな, 取るに足らない" },
-            // 問題番号26
             { english: "character", japanese: "性格, 人格, 特徴, 登場人物, 文字" },
-            // 問題番号27
             { english: "feature", japanese: "(目立った)特徴, 顔立ち； ～を特集する, 呼び物にする" },
-            // 問題番号28
             { english: "trait", japanese: "特徴, 特色" },
-            // 問題番号29
             { english: "typical", japanese: "典型的な, (～)らしい(of～)" },
-            // 問題番号30
             { english: "unique", japanese: "(～に)特有の(to～), 独自の； 唯一の" },
-            // 問題番号31
             { english: "peculiar", japanese: "(～に)特有の(to～)； 風変わりな" },
-            // 問題番号32
             { english: "particular", japanese: "特定の, 特別の" },
-            // 問題番号33
             { english: "general", japanese: "全般的な, 一般的な" },
-            // 問題番号34
             { english: "specify", japanese: "～を特定する" },
-            // 問題番号35
             { english: "distinguish", japanese: "～を(…と)区別する, 見分ける(from…)" },
-            // 問題番号36
             { english: "define", japanese: "～を定義する, 明確にする" },
-            // 問題番号37
             { english: "vague", japanese: "曖昧な, 漠然とした" },
-            // 問題番号38
             { english: "obscure", japanese: "不明瞭な, ぼやけた； 世に知られていない" },
-            // 問題番号39
             { english: "ambiguous", japanese: "曖昧な, どちらともとれる" },
-            // 問題番号40
             { english: "obvious", japanese: "明白な" },
-            // 問題番号41
             { english: "evident", japanese: "明白な" },
-            // 問題番号42
             { english: "apparent", japanese: "見たところの, 明白な" },
-            // 問題番号43
             { english: "respect", japanese: "尊敬, 尊重, (in)点, 事項； ～を尊敬する, 尊重する" },
-            // 問題番号44
             { english: "aspect", japanese: "(in)側面, 様相, 点" },
-            // 問題番号45
             { english: "detail", japanese: "(in)詳細" },
-            // 問題番号46
             { english: "precise", japanese: "正確な" },
-            // 問題番号47
             { english: "accurate", japanese: "正確な" },
-            // 問題番号48
             { english: "structure", japanese: "構造, 構成, 骨格" },
-            // 問題番号49
             { english: "construct", japanese: "～を建設する, 組み立てる" },
-            // 問題番号50
             { english: "destroy", japanese: "～を破壊する, 滅ぼす" },
-            // 問題番号51
             { english: "architecture", japanese: "建築, 建築学" },
-            // 問題番号52
             { english: "constitute", japanese: "～を構成する, 占める； 設立する" },
-            // 問題番号53
             { english: "institute", japanese: "～(法律・制度)を制定する； 協会, 研究所" },
-            // 問題番号54
             { english: "substitute", japanese: "～を(…の代わりに)代用する(for…)； 代用品, 代理人" },
-            // 問題番号55
             { english: "stable", japanese: "安定した" },
-            // 問題番号56
             { english: "establish", japanese: "～を設立する, 確立する" },
-            // 問題番号57
             { english: "subject", japanese: "科目, 主題, 家来, 臣民； 患者, 被験者； (～に)従属している, かかりやすい(to～)" },
             // 問題番号58
             { english: "subdue", japanese: "～を征服する, 支配する, 抑える" },
