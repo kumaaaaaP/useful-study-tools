@@ -1,11 +1,8 @@
-// 空欄を表示する関数
 function reveal(element) {
     element.classList.toggle('revealed');
 }
 
-// ページ読み込み時の処理
 document.addEventListener('DOMContentLoaded', function() {
-    // スムーズスクロールの設定
     document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -19,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // すべての空欄要素を取得してホバー効果を追加
     const blanks = document.querySelectorAll('.blank-container');
     blanks.forEach(blank => {
         blank.addEventListener('mouseenter', function() {
