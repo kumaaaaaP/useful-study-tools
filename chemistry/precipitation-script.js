@@ -1,4 +1,3 @@
-// 穴埋め部分のクリック表示機能
 document.addEventListener('DOMContentLoaded', () => {
     const blankContainers = document.querySelectorAll('.blank-container');
     
@@ -8,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // フラッシュカード機能
     const flashcardData = [
         { id: 1, question: 'Fe(OH)₂の色', answer: '緑白色' },
         { id: 2, question: 'Fe(OH)₃の色', answer: '赤褐色' },
@@ -97,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const endNum = parseInt(document.getElementById('endNum').value);
         const shouldShuffle = document.getElementById('shuffleCheck').checked;
 
-        // バリデーション
         if (startNum < 1 || endNum > 59 || startNum > endNum) {
             errorMsg.textContent = '範囲が正しくありません (1〜59)';
             return;
@@ -105,10 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         errorMsg.textContent = '';
 
-        // 指定範囲のカードを取得
         currentCards = flashcardData.filter(card => card.id >= startNum && card.id <= endNum);
 
-        // シャッフル
         if (shouldShuffle) {
             currentCards = shuffleArray([...currentCards]);
         }
@@ -117,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         flashcardArea.classList.remove('hidden');
         showCard();
         
-        // ページをフラッシュカードまでスクロール
         flashcardArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -133,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         progressText.textContent = `${currentIndex + 1} / ${currentCards.length}`;
         revealBtn.textContent = '答えを表示';
 
-        // ボタンの状態を更新
         prevBtn.disabled = currentIndex === 0;
         nextBtn.disabled = currentIndex === currentCards.length - 1;
     }
