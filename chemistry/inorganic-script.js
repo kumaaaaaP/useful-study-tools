@@ -1,0 +1,34 @@
+// 空欄を表示する関数
+function reveal(element) {
+    element.classList.toggle('revealed');
+}
+
+// ページ読み込み時の処理
+document.addEventListener('DOMContentLoaded', function() {
+    // スムーズスクロールの設定
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // すべての空欄要素を取得してホバー効果を追加
+    const blanks = document.querySelectorAll('.blank-container');
+    blanks.forEach(blank => {
+        blank.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('revealed')) {
+                this.style.opacity = '0.8';
+            }
+        });
+        blank.addEventListener('mouseleave', function() {
+            this.style.opacity = '1';
+        });
+    });
+});
