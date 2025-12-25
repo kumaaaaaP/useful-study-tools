@@ -217,3 +217,124 @@ main {
     display: block;
     margin-top: 10px;
 }
+/* 反応表のスタイル */
+#reactionTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    margin: 20px 0;
+}
+
+#reactionTable th,
+#reactionTable td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#reactionTable th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#reactionTable thead th:first-child {
+    background-color: #34495e;
+}
+
+#reactionTable td.reagent {
+    background-color: #ecf0f1;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 12px;
+}
+
+/* 沈殿の色 */
+#reactionTable td.precipitate-white {
+    background-color: #f8f9fa;
+}
+
+#reactionTable td.precipitate-green-white {
+    background-color: #d4edda;
+}
+
+#reactionTable td.precipitate-red-brown {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+#reactionTable td.precipitate-blue-white {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+#reactionTable td.precipitate-brown {
+    background-color: #d6c4a3;
+}
+
+#reactionTable td.precipitate-gray-green {
+    background-color: #cdd6d4;
+}
+
+#reactionTable td.precipitate-green {
+    background-color: #c3e6cb;
+}
+
+#reactionTable td.precipitate-pink {
+    background-color: #f5c6cb;
+}
+
+#reactionTable td.precipitate-pale-pink {
+    background-color: #f8d7da;
+}
+
+#reactionTable td.precipitate-black {
+    background-color: #343a40;
+    color: white;
+}
+
+#reactionTable td.precipitate-yellow {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* 錯イオンの色 */
+#reactionTable td.complex-colorless {
+    background-color: #ffffff;
+    border: 2px solid #007bff;
+}
+
+#reactionTable td.complex-deep-blue {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
+}
+
+#reactionTable td.complex-blue-purple {
+    background-color: #6f42c1;
+    color: white;
+}
+
+#reactionTable td.complex-yellow-brown {
+    background-color: #ffc107;
+    color: #333;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 100%;
+    }
+    
+    #reactionTable {
+        font-size: 0.6rem;
+    }
+    
+    #reactionTable th,
+    #reactionTable td {
+        padding: 8px 4px;
+    }
+}
