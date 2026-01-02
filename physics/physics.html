@@ -2,54 +2,81 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>高校物理 公式集</title>
-    <link rel="stylesheet" href="../style.css">
+  <title>高校物理 完全公式集（解説付き）</title>
+  <link rel="stylesheet" href="../style.css">
+  <!-- MathJax -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
     body {
       font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-      line-height: 1.8;
+      line-height: 1.9;
       margin: 20px;
+      background: #fafafa;
     }
     h1 {
       text-align: center;
     }
     h2 {
-      border-bottom: 2px solid #444;
+      border-bottom: 2px solid #333;
       margin-top: 40px;
     }
+    h3 {
+      margin-top: 25px;
+      color: #333;
+    }
     .formula {
-      margin: 10px 0 20px 0;
+      background: #fff;
+      padding: 10px;
+      margin: 10px 0;
+      border-left: 5px solid #4a90e2;
+    }
+    .explain {
+      margin-left: 10px;
+      color: #444;
+    }
+    .note {
+      margin-left: 10px;
+      color: #a00;
+      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
-<nav>
-        <ul>
-            <li><a href="../index.html">ホームへ戻る</a></li>
-        </ul>
-</nav>
-<h1>高校物理 公式集</h1>
+
+<h1>高校物理 完全公式集（解説付き）</h1>
 
 <!-- 力学 -->
 <h2>① 力学</h2>
 
-<p>速度</p>
+<h3>速度</h3>
 <div class="formula">
 \[
 v = \frac{\Delta x}{\Delta t}
 \]
 </div>
+<p class="explain">
+位置の変化量を時間で割ったもの。向きも含めた量なので<strong>ベクトル</strong>。
+</p>
+<p class="note">
+※ 速さは「大きさのみ」、速度は「向き＋大きさ」
+</p>
 
-<p>加速度</p>
+---
+
+<h3>加速度</h3>
 <div class="formula">
 \[
 a = \frac{\Delta v}{\Delta t}
 \]
 </div>
+<p class="explain">
+速度がどれだけ変化したかを表す量。減速でも加速度は存在する。
+</p>
 
-<p>等加速度直線運動</p>
+---
+
+<h3>等加速度直線運動</h3>
 <div class="formula">
 \[
 v = v_0 + at
@@ -61,29 +88,43 @@ x = v_0 t + \frac{1}{2}at^2
 v^2 = v_0^2 + 2ax
 \]
 </div>
+<p class="explain">
+加速度が一定の運動。落下運動や等速直線運動（\(a=0\)）も含まれる。
+</p>
+<p class="note">
+※ \(v_0\)：初速度、符号（＋−）に注意
+</p>
 
-<p>運動方程式（ニュートンの第2法則）</p>
+---
+
+<h3>運動方程式（ニュートンの第2法則）</h3>
 <div class="formula">
 \[
 F = ma
 \]
 </div>
+<p class="explain">
+物体に働く力の合計が、加速度を生じさせる。
+</p>
 
-<p>重力</p>
-<div class="formula">
-\[
-F = mg
-\]
-</div>
+---
 
-<p>仕事</p>
+<h3>仕事</h3>
 <div class="formula">
 \[
 W = Fx
 \]
 </div>
+<p class="explain">
+力が物体を動かしたときにした仕事。力と移動方向が同じ場合。
+</p>
+<p class="note">
+※ 向きが逆なら仕事は負
+</p>
 
-<p>エネルギー</p>
+---
+
+<h3>エネルギー</h3>
 <div class="formula">
 \[
 K = \frac{1}{2}mv^2
@@ -92,39 +133,40 @@ K = \frac{1}{2}mv^2
 U = mgh
 \]
 </div>
+<p class="explain">
+運動エネルギーと重力による位置エネルギー。
+</p>
 
-<p>力学的エネルギー保存</p>
+---
+
+<h3>力学的エネルギー保存</h3>
 <div class="formula">
 \[
 \frac{1}{2}mv^2 + mgh = \text{一定}
 \]
 </div>
+<p class="explain">
+摩擦や空気抵抗がないとき、エネルギーの和は保存される。
+</p>
 
-<p>運動量</p>
-<div class="formula">
-\[
-p = mv
-\]
-</div>
+---
 
 <!-- 波動 -->
 <h2>② 波動</h2>
 
-<p>波の基本式</p>
+<h3>波の基本式</h3>
 <div class="formula">
 \[
 v = f\lambda
 \]
 </div>
+<p class="explain">
+波の速さは「振動数 × 波長」。
+</p>
 
-<p>角振動数</p>
-<div class="formula">
-\[
-\omega = 2\pi f
-\]
-</div>
+---
 
-<p>単振動</p>
+<h3>単振動</h3>
 <div class="formula">
 \[
 x = A\sin(\omega t)
@@ -133,63 +175,70 @@ x = A\sin(\omega t)
 a = -\omega^2 x
 \]
 </div>
+<p class="explain">
+ばね振り子・単振り子の近似運動。
+</p>
+<p class="note">
+※ 加速度は常に原点方向
+</p>
+
+---
 
 <!-- 熱 -->
 <h2>③ 熱</h2>
 
-<p>熱量</p>
+<h3>熱量</h3>
 <div class="formula">
 \[
 Q = mc\Delta T
 \]
 </div>
+<p class="explain">
+物体の温度変化に必要な熱量。
+</p>
 
-<p>気体の状態方程式</p>
+---
+
+<h3>気体の状態方程式</h3>
 <div class="formula">
 \[
 pV = nRT
 \]
 </div>
+<p class="explain">
+理想気体の圧力・体積・温度の関係。
+</p>
 
-<p>熱力学第一法則</p>
+---
+
+<h3>熱力学第一法則</h3>
 <div class="formula">
 \[
 \Delta U = Q - W
 \]
 </div>
+<p class="explain">
+エネルギー保存を熱現象に拡張した法則。
+</p>
+
+---
 
 <!-- 電磁気 -->
 <h2>④ 電磁気</h2>
 
-<p>クーロンの法則</p>
-<div class="formula">
-\[
-F = k\frac{q_1 q_2}{r^2}
-\]
-</div>
-
-<p>電場</p>
-<div class="formula">
-\[
-E = \frac{F}{q}
-\]
-</div>
-
-<p>電圧</p>
-<div class="formula">
-\[
-V = \frac{W}{q}
-\]
-</div>
-
-<p>オームの法則</p>
+<h3>オームの法則</h3>
 <div class="formula">
 \[
 V = IR
 \]
 </div>
+<p class="explain">
+電圧・電流・抵抗の基本関係。
+</p>
 
-<p>電力</p>
+---
+
+<h3>電力</h3>
 <div class="formula">
 \[
 P = IV
@@ -198,30 +247,36 @@ P = IV
 P = I^2R
 \]
 </div>
+<p class="explain">
+電気が1秒間にする仕事。
+</p>
 
-<p>コンデンサー</p>
-<div class="formula">
-\[
-Q = CV
-\]
-</div>
+---
 
-<!-- 原子・量子 -->
+<!-- 原子 -->
 <h2>⑤ 原子・量子</h2>
 
-<p>光のエネルギー</p>
+<h3>光のエネルギー</h3>
 <div class="formula">
 \[
 E = hf
 \]
 </div>
+<p class="explain">
+光は粒子（光子）として振る舞い、振動数に比例したエネルギーを持つ。
+</p>
 
-<p>質量とエネルギー</p>
+---
+
+<h3>質量とエネルギー</h3>
 <div class="formula">
 \[
 E = mc^2
 \]
 </div>
+<p class="explain">
+質量とエネルギーは等価。
+</p>
 
 </body>
 </html>
